@@ -1,0 +1,7 @@
+/*/
+!/programs/
+/programs/lib/**/.git/
+/programs/lib/**/.gitignore
+/programs/lib/**
+!/programs/lib/**/include/
+!/programs/lib/**/lib/
