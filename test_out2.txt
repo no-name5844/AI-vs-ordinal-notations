@@ -1,0 +1,2 @@
+started
+expanded: '# expand: (0)(1)  ->  2 term(s)\n(0)(1)[1] = (0)\n    standard:  yes\n(0)(1)[2] = (0)(0)\n    standard: '
