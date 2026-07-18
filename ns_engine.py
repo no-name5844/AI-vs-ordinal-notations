@@ -85,6 +85,15 @@ def expand(alpha: str, n: int) -> str:
     if a == 'w^(w^w)':
         return f"w^(w^{n})"
     
+    # ε₀: ε₀[1]=1, ε₀[2]=ω, ε₀[3]=ω^ω, ε₀[4]=ω^ω^ω, ...
+    if a == 'e0':
+        if n == 1:
+            return '1'
+        result = 'w'
+        for _ in range(n - 2):
+            result = f'w^({result})' if '(' in result or '^' in result else f'w^{result}'
+        return result
+    
     # 加法: β + γ
     if '+' in a:
         parts = a.rsplit('+', 1)
