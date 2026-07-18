@@ -48,6 +48,7 @@
 namespace g = googology;
 using g::Notation;
 using g::OrdinalNotation;
+using g::Ordinal;
 using g::Op;
 
 // ----------------------------------------------------------------------------
@@ -174,6 +175,82 @@ static void parseExpandPairs(const std::vector<std::string>& args,
     }
     if (out.empty())
         fail("'expand' requires at least one -e <expr> -n <count> pair");
+}
+
+// ----------------------------------------------------------------------------
+// ns (n,m-Ns, n fixed to 10) — evaluate f(β)=n^β at an ordinal index β read
+// from ANOTHER notation's expression. The user only needs the n=10 term, so
+// n is hard-wired to 10 and we emit a single f-term (no sequence expansion).
+//   ns expand -e <baseNotation> <expression> [-e <baseNotation> <expression> ...]
+// Index sources currently wired: "ord" (ω-language), "weak_veblen" (its
+// internal Ordinal), "ns" (its own index). Other ordinal notations
+// (prss/bms/...) need a notation->Ordinal bridge that is intentionally NOT
+// wired yet (see user directive 2026-07-18).
+// ----------------------------------------------------------------------------
+
+static Ordinal notationToOrdinal(Notation* n) {
+    if (auto* w = dynamic_cast<g::ordinal::WeakVeblen*>(n)) return w->ord();
+    if (auto* ns = dynamic_cast<g::real_sequence::Ns*>(n)) return ns->index();
+    if (auto* on = dynamic_cast<OrdinalNotation*>(n))
+        fail("index source '" + on->name() + "' is not yet wired to an ordinal "
+             "(supported: ord, weak_veblen, ns)");
+    fail("notation has no ordinal value");
+    return Ordinal();   // unreachable
+}
+
+static std::vector<std::pair<std::string, std::string>>
+parseNsIndices(const std::vector<std::string>& args) {
+    std::vector<std::pair<std::string, std::string>> out;
+    size_t i = 0;
+    while (i < args.size()) {
+        if (args[i] != "-e")
+            fail("unexpected token '" + args[i] + "' in ns (expected -e)");
+        if (i + 2 >= args.size())
+            fail("'-e' for ns requires '<baseNotation> <expression>'");
+        std::string base = args[++i];
+        std::string expr = args[++i];
+        ++i;
+        if (i + 1 < args.size() && args[i] == "-n") i += 2; // optional, ignored
+        out.push_back({base, expr});
+    }
+    if (out.empty())
+        fail("ns requires at least one -e <baseNotation> <expression>");
+    return out;
+}
+
+static int cmdNsF(const std::vector<std::string>& args) {
+    auto idxs = parseNsIndices(args);
+    std::ostringstream out;
+    for (const auto& kv : idxs) {
+        const std::string& base = kv.first;
+        const std::string& expr = kv.second;
+
+        Ordinal beta;
+        if (base == "ord" || base == "ns") {
+            try { beta = Ordinal::parse(expr); }
+            catch (const std::exception& e) {
+                fail("cannot parse ordinal '" + expr + "': " + e.what());
+            }
+        } else {
+            auto bn = createNotation(base);
+            if (!bn) fail("unknown index source notation '" + base + "'");
+            try { bn->string_to_it(expr); }
+            catch (const std::exception& e) {
+                fail("cannot parse '" + expr + "' as " + base + ": " + e.what());
+            }
+            beta = notationToOrdinal(bn.get());
+        }
+
+        g::real_sequence::Ns ns(10, 2);   // n = 10 固定; 只取该项
+        ns.setIndex(beta);
+
+        out << "# ns (n=10): index β = " << beta.to_string()
+            << "   (source: " << base << " " << expr << ")\n";
+        // 只取 n=10 时该项 f(β)=10^β，不输出累加求和的其他项。
+        out << "  f(β) = 10^β = " << ns.f(beta) << "\n";
+    }
+    std::cout << out.str();
+    return 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -332,6 +409,11 @@ static void printNotationHelp(const std::string& notation) {
               << "    (large-number notations). If the notation defines a successor\n"
               << "    check and/or a standard form, each term is annotated with\n"
               << "    'successor: yes/no' and 'standard: yes/no' where available.\n\n"
+              << "    For 'ns' (n,m-Ns, n fixed to 10) the -e flag takes TWO arguments\n"
+              << "    '<baseNotation> <expression>': the ordinal index β is read from\n"
+              << "    that notation's expression. Supported index sources: ord (ω-language),\n"
+              << "    weak_veblen, ns. Output is the single term f(β)=10^β (n fixed\n"
+              << "    to 10); no accumulated sum of other terms is printed.\n\n"
               << "compare\n"
               << "    Requires at least two -e expressions. All inputs must be in\n"
               << "    standard form (a non-standard input is reported as an error).\n"
@@ -392,6 +474,8 @@ int main(int argc, char** argv) {
     }
 
     if (command == "help")        { printNotationHelp(notation); return 0; }
+    if (notation == "ns" && (command == "expand" || command == "f"))
+        return cmdNsF(args);
     if (command == "expand")      { return cmdExpand(notation, args); }
     if (command == "compare")     { return cmdCompare(notation, args); }
     if (command == "is_standard") { return cmdIsStandard(notation, args); }
