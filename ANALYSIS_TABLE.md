@@ -75,8 +75,27 @@ $$\text{各级联贡献}: \frac{2}{3} \to \frac{1}{6} \to \frac{1}{24} \to \frac
 
 **嵌套结构**：$\zeta_0 = \lim\{\varepsilon_0,\ \varepsilon_{\varepsilon_0},\ \varepsilon_{\varepsilon_{\varepsilon_0}},\ \ldots\}$，每层嵌套产生新级联。
 
-### Veblen 完整级联 (猜想 $f(\varphi(n,0))=2^{2^{n+1}-2}$)
+---
 
-$$\text{Veblen总贡献} = \frac{32}{9}\sum_{n=1}^{\infty}\frac{1}{2^{2^{n+1}-2}} = \frac{8}{9} + \frac{1}{18} + \frac{1}{4608} + \cdots \approx \frac{17}{18}$$
+## BM4 → NS 完整对应表（精确分数）
 
-$$S(\Gamma_0) \approx S(\omega^\omega) + \frac{17}{18} \approx 2.788$$
+| BM4 | 对应序数 | NS 精确 S | 小数 |
+|:--|:--|:--|:--|
+| `(0)` | 1 | $0$ | 0 |
+| `(0)(0)` | 2 | $\frac{1}{2}$ | 0.5 |
+| `(0)(1)` | $\omega$ | $1$ | 1 |
+| `(0)(1)(0)` | $\omega+1$ | $\frac{5}{4}$ | 1.25 |
+| `(0)(1)(1)` | $\omega\cdot 2$ | $\frac{3}{2}$ | 1.5 |
+| `(0)(1)(2)` | $\omega^\omega$ | $1+\frac{8}{3}(\frac{1}{4}+\frac{1}{16}+\cdots)$ | ≈1.844 |
+| `(0)(1,1)` | $\varepsilon_0$ | $S(\omega^\omega)+\frac{8}{9}$ | ≈2.733 |
+| `(0)(1,1)(2,1)` | $\zeta_0$ | $S(\varepsilon_\omega)+\frac{1}{18}$ | ≈2.788 |
+| `(0)(1,1,1)` | $\varphi_\omega(0)$ | ≈$S(\zeta_\omega)$ | ≈2.789 |
+
+> BM4 基本列与标准序数约定在 $\varepsilon_0$ 级一致，$f$ 值无歧义。
+> 所有 $S$ 均为有理数（分母 = $2^m\cdot 3^n$），无无理数。
+
+### 复位级联
+
+$$f(\varepsilon_0)=f(\Gamma_0)=f(\text{SVO})=4,\quad S\text{ 每次复位 }+\frac{8}{9}$$
+
+$$S = S(\omega^\omega) + \frac{8}{9}\cdot N_{\text{复位}} + \Sigma\text{小量}$$
