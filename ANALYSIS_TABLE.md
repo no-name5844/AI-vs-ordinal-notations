@@ -64,13 +64,13 @@ $$f(\varepsilon_k) = 2^{2(k+1)} = 4^{k+1},\quad \text{贡献}_k = \frac{8}{3\cdo
 
 $$S(\varepsilon_\omega) = S(\omega^\omega) + \frac{8}{9} \approx 2.733$$
 
-### NS Veblen 层级
+### NS Veblen 层级联（嵌套分形）
 
-| Veblen | f | 贡献 |
-|:--|:--|:--|
-| φ(1,0)=ε₀ | 2²=4 | 2/3 |
-| φ(2,0)=ζ₀ | 2⁶=64 | 1/24 |
-| φ(3,0)=η₀ | 极大 | 极小 |
+**ε 级联**：
+$$f(\varepsilon_k) = 2^{2(k+1)},\quad \text{总贡献} = \frac{8}{9},\quad S(\varepsilon_\omega) \approx 2.733$$
 
-- 每级 Veblen 间 f 倍增 ≈×16，贡献 ≈÷4
-- Veblen 层级联：(2/3)·(1+1/4+1/16+...) = 8/9
+**ζ 级联**：$f(\zeta_0)=2^6=64$，总贡献 $= \frac{1}{18} \approx 0.056$
+
+$$\text{各级联贡献}: \frac{2}{3} \to \frac{1}{6} \to \frac{1}{24} \to \frac{1}{96} \to \cdots \quad \left(\text{公比} \frac{1}{4}\right)$$
+
+**嵌套结构**：$\zeta_0 = \lim\{\varepsilon_0,\ \varepsilon_{\varepsilon_0},\ \varepsilon_{\varepsilon_{\varepsilon_0}},\ \ldots\}$，每层嵌套产生新级联。
