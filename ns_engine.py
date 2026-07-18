@@ -54,6 +54,17 @@ def expand(alpha: str, n: int) -> str:
     if a == 'w^w':
         return f"w^{n}"
     
+    # ω^ω·c (c>1): ω^ω·c[n] = ω^ω·(c-1) + ω^n
+    m = re.match(r'^w\^w\*(\d+)$', a)
+    if m:
+        c = int(m.group(1))
+        return f"w^w*{c-1}+w^{n}" if c > 1 else f"w^{n}"
+    
+    # ω^(ω+1) = ω^ω·ω 的基础: ω^(ω+1)·c [n] = ω^(ω+1)·(c-1) + ω^ω·n
+    m = re.match(r'^w\^\(w\+1\)$', a)
+    if m:
+        return f"w^w*{n}"
+    
     # ω^(ω·c): ω^(ω·c)[n] = ω^(ω·(c-1)+n)
     m = re.match(r'^w\^\(w\*(\d+)\)$', a)
     if m:
