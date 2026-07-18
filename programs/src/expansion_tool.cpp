@@ -42,7 +42,8 @@
 #include "googology/notations/ordinal/sequence/difference/prss/Prss.hpp"
 #include "googology/notations/ordinal/sequence/difference/epsilon_ss/EpsilonSS.hpp"
 #include "googology/notations/ordinal/veblen/weakveblen/WeakVeblen.hpp"
-#include "googology/notations/ordinal/ns/Ns.hpp"
+#include "googology/notations/real_sequence/ns/Ns.hpp"
+#include "googology/notations/ordinal/matrix/bms/BMS.hpp"
 
 namespace g = googology;
 using g::Notation;
@@ -57,7 +58,8 @@ static const std::vector<std::string>& knownNotations() {
     static const std::vector<std::string> names = {
         "knuth", "conway", "prss",
         "epsilon_p_ss", "epsilon_omega_ss",
-        "weak_veblen", "ns"};
+        "weak_veblen", "ns",
+        "bm4", "bm1", "bm3.3"};
     return names;
 }
 
@@ -73,32 +75,31 @@ static std::unique_ptr<Notation> createNotation(const std::string& name) {
     if (name == "epsilon_p_ss") return std::make_unique<g::ordinal::EpspSS>();
     if (name == "epsilon_omega_ss") return std::make_unique<g::ordinal::EpsOmegaSS>();
     if (name == "weak_veblen")  return std::make_unique<g::ordinal::WeakVeblen>();
-    if (name == "ns")           return std::make_unique<g::ordinal::Ns>();
+    if (name == "ns")           return std::make_unique<g::real_sequence::Ns>();
+    if (name == "bm4")          return std::make_unique<g::ordinal::BM4>();
+    if (name == "bm1")          return std::make_unique<g::ordinal::BM1>();
+    if (name == "bm3.3")        return std::make_unique<g::ordinal::BM3_3>();
     return nullptr;
 }
 
 // ----------------------------------------------------------------------------
 // Standard-form detection
 //
-// The library's normalize() rewrites *this to the canonical form and returns
-// true on success (legal expression) / false on failure (non-standard, *this
-// restored). A *canonical* standard expression is left unchanged by normalize,
-// so we decide "is standard" as: normalize() succeeded AND the rendered form
-// is unchanged. We run the check on a freshly-reconstructed probe (the
-// notation's to_string() round-trips through string_to_it for every notation
-// wired here), leaving the caller's object untouched.
+// The library's OrdinalNotation::is_standard() runs the §12 generic decision
+// engine (design.md §12): a downward BFS seeded from the notation's master
+// limit expression (roots()), using only the notation's own compare() /
+// expand() / clone() / roots(). We run it on a freshly-reconstructed probe
+// (to_string() round-trips through string_to_it for every wired notation),
+// leaving the caller's object untouched.
 // ----------------------------------------------------------------------------
 
 static bool isStandard(const Notation& n) {
     auto probe = createNotation(n.name());
     if (!probe) return false;
     probe->string_to_it(n.to_string());        // reconstruct from its rendered form
-    std::string before = n.to_string();
     auto* on = dynamic_cast<OrdinalNotation*>(probe.get());
     if (!on) return false;                      // only ordinal-sequence notations
-    bool ok = on->normalize();
-    std::string after = probe->to_string();
-    return ok && (before == after);
+    return on->is_standard();                   // §12 generic decision engine
 }
 
 // ----------------------------------------------------------------------------
@@ -249,8 +250,6 @@ static int cmdCompare(const std::string& notation, const std::vector<std::string
             if (!isStandard(*o))
                 fail("expression '" + e + "' is not in standard form; "
                      "'compare' requires standard-form inputs");
-            auto* on = dynamic_cast<OrdinalNotation*>(o.get());
-            on->normalize();   // reduce to canonical form for a fair comparison
         }
         items.push_back(std::move(o));
     }

@@ -221,6 +221,45 @@ ns/fast:
 .PHONY : ns/fast
 
 #=============================================================================
+# Target rules for targets named bm4
+
+# Build rule for target.
+bm4: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bm4
+.PHONY : bm4
+
+# fast build rule for target.
+bm4/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm4.dir/build.make CMakeFiles/bm4.dir/build
+.PHONY : bm4/fast
+
+#=============================================================================
+# Target rules for targets named bm1
+
+# Build rule for target.
+bm1: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bm1
+.PHONY : bm1
+
+# fast build rule for target.
+bm1/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm1.dir/build.make CMakeFiles/bm1.dir/build
+.PHONY : bm1/fast
+
+#=============================================================================
+# Target rules for targets named bm3.3
+
+# Build rule for target.
+bm3.3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bm3.3
+.PHONY : bm3.3
+
+# fast build rule for target.
+bm3.3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm3.3.dir/build.make CMakeFiles/bm3.3.dir/build
+.PHONY : bm3.3/fast
+
+#=============================================================================
 # Target rules for targets named googology
 
 # Build rule for target.
@@ -324,6 +363,32 @@ test_ns/fast:
 	$(MAKE) $(MAKESILENT) -f lib/GoogologyLib/CMakeFiles/test_ns.dir/build.make lib/GoogologyLib/CMakeFiles/test_ns.dir/build
 .PHONY : test_ns/fast
 
+#=============================================================================
+# Target rules for targets named test_standard_form
+
+# Build rule for target.
+test_standard_form: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_standard_form
+.PHONY : test_standard_form
+
+# fast build rule for target.
+test_standard_form/fast:
+	$(MAKE) $(MAKESILENT) -f lib/GoogologyLib/CMakeFiles/test_standard_form.dir/build.make lib/GoogologyLib/CMakeFiles/test_standard_form.dir/build
+.PHONY : test_standard_form/fast
+
+#=============================================================================
+# Target rules for targets named test_bms
+
+# Build rule for target.
+test_bms: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bms
+.PHONY : test_bms
+
+# fast build rule for target.
+test_bms/fast:
+	$(MAKE) $(MAKESILENT) -f lib/GoogologyLib/CMakeFiles/test_bms.dir/build.make lib/GoogologyLib/CMakeFiles/test_bms.dir/build
+.PHONY : test_bms/fast
+
 src/expansion_tool.obj: src/expansion_tool.cpp.obj
 .PHONY : src/expansion_tool.obj
 
@@ -337,6 +402,9 @@ src/expansion_tool.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/epsilon_omega_ss.dir/build.make CMakeFiles/epsilon_omega_ss.dir/src/expansion_tool.cpp.obj
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/weak_veblen.dir/build.make CMakeFiles/weak_veblen.dir/src/expansion_tool.cpp.obj
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ns.dir/build.make CMakeFiles/ns.dir/src/expansion_tool.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm4.dir/build.make CMakeFiles/bm4.dir/src/expansion_tool.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm1.dir/build.make CMakeFiles/bm1.dir/src/expansion_tool.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm3.3.dir/build.make CMakeFiles/bm3.3.dir/src/expansion_tool.cpp.obj
 .PHONY : src/expansion_tool.cpp.obj
 
 src/expansion_tool.i: src/expansion_tool.cpp.i
@@ -352,6 +420,9 @@ src/expansion_tool.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/epsilon_omega_ss.dir/build.make CMakeFiles/epsilon_omega_ss.dir/src/expansion_tool.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/weak_veblen.dir/build.make CMakeFiles/weak_veblen.dir/src/expansion_tool.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ns.dir/build.make CMakeFiles/ns.dir/src/expansion_tool.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm4.dir/build.make CMakeFiles/bm4.dir/src/expansion_tool.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm1.dir/build.make CMakeFiles/bm1.dir/src/expansion_tool.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm3.3.dir/build.make CMakeFiles/bm3.3.dir/src/expansion_tool.cpp.i
 .PHONY : src/expansion_tool.cpp.i
 
 src/expansion_tool.s: src/expansion_tool.cpp.s
@@ -367,6 +438,9 @@ src/expansion_tool.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/epsilon_omega_ss.dir/build.make CMakeFiles/epsilon_omega_ss.dir/src/expansion_tool.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/weak_veblen.dir/build.make CMakeFiles/weak_veblen.dir/src/expansion_tool.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ns.dir/build.make CMakeFiles/ns.dir/src/expansion_tool.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm4.dir/build.make CMakeFiles/bm4.dir/src/expansion_tool.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm1.dir/build.make CMakeFiles/bm1.dir/src/expansion_tool.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bm3.3.dir/build.make CMakeFiles/bm3.3.dir/src/expansion_tool.cpp.s
 .PHONY : src/expansion_tool.cpp.s
 
 # Help Target
@@ -377,6 +451,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... bm1"
+	@echo "... bm3.3"
+	@echo "... bm4"
 	@echo "... conway"
 	@echo "... demo"
 	@echo "... epsilon_omega_ss"
@@ -386,11 +463,13 @@ help:
 	@echo "... knuth"
 	@echo "... ns"
 	@echo "... prss"
+	@echo "... test_bms"
 	@echo "... test_conway"
 	@echo "... test_epspss"
 	@echo "... test_knuth"
 	@echo "... test_ns"
 	@echo "... test_prss"
+	@echo "... test_standard_form"
 	@echo "... test_weakveblen"
 	@echo "... weak_veblen"
 	@echo "... src/expansion_tool.obj"

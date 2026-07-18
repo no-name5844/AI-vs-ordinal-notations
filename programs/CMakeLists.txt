@@ -15,7 +15,7 @@ add_executable(expansion_tool ${CLI_SRC})
 target_link_libraries(expansion_tool PRIVATE googology)
 
 # Per-notation multi-call binaries (same source; notation chosen by argv[0]).
-foreach(NOTATION prss knuth conway epsilon_p_ss epsilon_omega_ss weak_veblen ns)
+foreach(NOTATION prss knuth conway epsilon_p_ss epsilon_omega_ss weak_veblen ns bm4 bm1 bm3.3)
     add_executable(${NOTATION} ${CLI_SRC})
     target_link_libraries(${NOTATION} PRIVATE googology)
 endforeach()
